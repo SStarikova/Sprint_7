@@ -41,7 +41,7 @@ public class CreateCourierTest {
     // нельзя создать курьера без логина
     @Test
     @DisplayName("Create without login")
-    @Description("Этот тест проверяет, можно ли создать курьера без логина, тест упадет, т.к. реализация текста отличается от документации")
+    @Description("Этот тест проверяет, можно ли создать курьера без логина")
     public void createWithoutLoginTest() {
         // Создаем объект с данными для нового курьера
         Courier courier = Courier.loginWithoutLogin();
@@ -53,7 +53,7 @@ public class CreateCourierTest {
     // нельзя создать курьера без пароля
     @Test
     @DisplayName("Create without password")
-    @Description("Этот тест проверяет, можно ли создать курьера без пароля, тест упадет, т.к. реализация текста отличается от документации")
+    @Description("Этот тест проверяет, можно ли создать курьера без пароля")
     public void createWithoutPasswordTest() {
         // Создаем объект с данными для нового курьера
         Courier courier = Courier.loginWithoutPassword();

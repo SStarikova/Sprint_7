@@ -55,7 +55,7 @@ public class CourierChecks {
                 .assertThat()
                 .statusCode(HttpURLConnection.HTTP_BAD_REQUEST)
                 .assertThat()
-                .body("message", equalTo("Недостаточно данных для создания учетной записи")); // здесь будет ошибка, так как реализация текста отличается от документации
+                .body("message", equalTo("Недостаточно данных для создания учетной записи"));
     }
 
     // Проверка на то, что курьер дублируется
@@ -65,6 +65,6 @@ public class CourierChecks {
                 .assertThat()
                 .statusCode(HttpURLConnection.HTTP_CONFLICT)
                 .assertThat()
-                .body("message", equalTo("Этот логин уже используется. Попробуйте другой.")); // здесь будет ошибка, так как реализация текста отличается от документации
+                .body("message", equalTo("Этот логин уже используется")); // здесь будет ошибка, так как реализация текста отличается от документации
     }
 }
