@@ -4,18 +4,18 @@ import io.restassured.response.ValidatableResponse;
 import java.net.HttpURLConnection;
 
 import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.Matchers.notNullValue;
 
 public class CourierChecks {
 
     // Проверка на успешную авторизацию
     @Step("Success login")
     public int loginSuccess(ValidatableResponse loginResponse) {
-        int id = loginResponse
+        loginResponse
                 .assertThat()
                 .statusCode(HttpURLConnection.HTTP_OK)
-                .extract()
-                .path("id");
-        return id;
+                .body("id", notNullValue());
+        return loginResponse.extract().path("id"); // извлекаем и возвращаем id курьера
     }
 
     // Проверка на провальную авторизацию с неправильным данными курьера

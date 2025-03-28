@@ -24,18 +24,15 @@ public class CreateCourierTest {
     public void failedCreateWithDuplicateCourierTest() {
         // Создаем объект с данными для нового курьера
         Courier courier = Courier.successLogin();
-        ValidatableResponse createResponse = client.createCourier(courier);
-        check.isCreated(createResponse);
-
-        // Создаем объект с теми же данными для второго курьера
-        ValidatableResponse createDoubleResponse = client.createCourier(courier);
-        // проверяем что при создании дублера будет ошибка
-        check.doubleCreated(createDoubleResponse);
-
-        // Авторизуемся под созданным курьером для получения id курьера
         Credentials creds = Credentials.fromCourier(courier);
-        ValidatableResponse loginResponse = client.logIn(creds);
-        courierId = check.loginSuccess(loginResponse);
+
+        ValidatableResponse createResponse = client.createCourier(courier); // Создаем объект с данными для первого курьера
+        ValidatableResponse createDoubleResponse = client.createCourier(courier); // Создаем объект с теми же данными для второго курьера
+        ValidatableResponse loginResponse = client.logIn(creds); // Авторизуемся под созданным курьером для получения id курьера
+
+        courierId = check.loginSuccess(loginResponse); // получаем id первого курьера для его дальнейшего удаления
+        check.isCreated(createResponse); // проверяем что первый курьер создан
+        check.doubleCreated(createDoubleResponse); // проверяем что при создании дублера будет ошибка
     }
 
     // нельзя создать курьера без логина

@@ -11,9 +11,6 @@ import org.junit.runners.Parameterized;
 import java.net.HttpURLConnection;
 
 import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.Assert.assertEquals;
-
 @RunWith(Parameterized.class)
 public class CreateOrderTest {
     private OrderMethods orderMethods = new OrderMethods();
@@ -46,24 +43,20 @@ public class CreateOrderTest {
     // Тест, который проверяет создание заказа
     @Test
     @DisplayName("Order can be created")
-    @Description("Этот тест проверяет возможность создания заказа и наличие в ответе валидного номера отслеживания.") // Описание теста
+    @Description("Этот тест проверяет возможность создания заказа и наличие в ответе валидного номера отслеживания.")
+    // Описание теста
     public void orderCanBeCreatedTest() {
         // Создание заказа и получение ответа
-        ValidatableResponse responseCreate = orderMethods.createOrder(order);
+        ValidatableResponse responseCreate = orderMethods.createOrder(order)
+                .assertThat()
+                .statusCode(statusCode) // Проверка, что фактический статус-код совпадает с ожидаемым
+                .body("track", notNullValue()); // Проверка, что номер отслеживания не является null
 
-        // Извлечение фактического статус-кода из ответа
-        int actualStatusCode = responseCreate.extract().statusCode();
-
-        // Извлечение номера отслеживания из ответа
+        // получаем номер отслеживания из ответа
         trackNumber = responseCreate.extract().path("track");
-
-        // Проверка, что номер отслеживания не является null
-        assertThat("Expected track number", trackNumber, notNullValue());
-
-        // Проверка, что фактический статус-код совпадает с ожидаемым
-        assertEquals("Status Code incorrect", statusCode, actualStatusCode);
     }
 
+    // Метод для отмены заказа
     @After
     public void deleteOrder() {
         orderMethods.cancelOrder(trackNumber);

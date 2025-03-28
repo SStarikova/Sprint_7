@@ -39,13 +39,12 @@ public class LoginCourierTest {
 
     // успешное создание и логин курьера без имени
     @Test
-    @DisplayName("Successfull create and login without name")
+    @DisplayName("Successfull login without name")
     @Description("Этот тест проверяет, может ли курьер успешно войти в систему, используя валидные учетные данные без имени.")
-    public void successfullCreateAndLoginWithoutNameTest() {
+    public void successfullLoginWithoutNameTest() {
         // Создаем объект с данными для нового курьера
         Courier courier = Courier.loginWithoutFirstName();
         ValidatableResponse createResponse = client.createCourier(courier);
-        check.isCreated(createResponse);
 
         // Авторизуемся под созданным курьером
         Credentials creds = Credentials.fromCourier(courier);
@@ -63,7 +62,6 @@ public class LoginCourierTest {
         // Создаем объект с данными для нового курьера
         Courier courier = Courier.successLogin();
         ValidatableResponse createResponse = client.createCourier(courier);
-        check.isCreated(createResponse);
 
         // Авторизуемся под курьером с невалидным логином
         Credentials creds = Credentials.fromCourierWithWrongLogin(courier);
@@ -79,7 +77,6 @@ public class LoginCourierTest {
         // Создаем объект с данными для нового курьера
         Courier courier = Courier.successLogin();
         ValidatableResponse createResponse = client.createCourier(courier);
-        check.isCreated(createResponse);
 
         // Авторизуемся под курьером с невалидным паролем
         Credentials creds = Credentials.fromCourierWithWrongPassword(courier);
@@ -95,7 +92,6 @@ public class LoginCourierTest {
         // Создаем объект с данными для нового курьера
         Courier courier = Courier.successLogin();
         ValidatableResponse createResponse = client.createCourier(courier);
-        check.isCreated(createResponse);
 
         // Авторизуемся под курьером без пароля
         Credentials creds = Credentials.fromCourierWithNullPassword(courier);
@@ -111,7 +107,6 @@ public class LoginCourierTest {
         // Создаем объект с данными для нового курьера
         Courier courier = Courier.successLogin();
         ValidatableResponse createResponse = client.createCourier(courier);
-        check.isCreated(createResponse);
 
         // Авторизуемся под курьером без логина
         Credentials creds = Credentials.fromCourierWithNullLogin(courier);
